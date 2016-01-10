@@ -22,6 +22,7 @@ Add the following methods to `nanogl-state/config`
  - `blendMask`     : Applies the alpha value of fragments to the background. (ZERO, SRC_ALPHA)
 
 ```javascript
+var state = new GLState( gl );
 
 var blendAddCfg = state.config().blendAdd()
 
@@ -30,7 +31,7 @@ var blendAddCfg = state.config().blendAdd()
 function renderLoop(){
 
   state.now( blendAddCfg );
-  drawSomeTriangle();
+  drawSomePrimitives();
 
 }
 
@@ -41,7 +42,7 @@ function renderLoop(){
   gl.enable( gl.BLEND );
   gl.blendFunc( gl.ONE, gl.ONE );
 
-  drawSomeTriangle();
+  drawSomePrimitives();
 
   gl.disable( gl.BLEND );
   gl.blendFunc( gl.ONE, gl.ZERO );
@@ -60,6 +61,7 @@ Add the following methods to `nanogl-state/config`
 
 
 ```javascript
+var state = new GLState( gl );
 
 var maskCfg = state.config().quickStencilMask()
 var testCfg = state.config().quickStencilTest()
@@ -69,10 +71,10 @@ var testCfg = state.config().quickStencilTest()
 function renderLoop(){
 
   state.now( maskCfg );
-  drawMaskingTriangle(); // draw mask
+  drawMaskingPrimitives(); // draw mask
 
   state.now( testCfg );
-  drawMaskedTriangle(); // draw masked
+  drawMaskedPrimitives(); // draw masked
 
 }
 
@@ -88,14 +90,14 @@ function renderLoop(){
   gl.colorMask( false, false, false, false )
   gl.depthMask( false );
 
-  drawMaskingTriangle();
+  drawMaskingPrimitives();
 
   gl.colorMask( true, true, true, true )
   gl.depthMask( true );
   gl.stencilMask( 0 )
   gl.stencilFunc( gl.EQUAL, 1, 0xFF )
 
-  drawMaskedTriangle();
+  drawMaskedPrimitives();
 
   gl.disable( gl.STENCIL_TEST )
   gl.stencilFunc( gl.ALWAYS, 0, 0xFF )
